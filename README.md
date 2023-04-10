@@ -48,7 +48,8 @@ total 108
 ```
 
 ### 有效更新到spark集群
-step 1:
+- step 1
+```
 cd /opt/cloudera/parcels/CDH-6.2.0-1.cdh6.2.0.p0.967373/lib/spark/jars/
 没改源码的md5值
 md5sum  spark-sql_2.11-2.4.0-cdh6.2.0.jar
@@ -58,8 +59,10 @@ md5sum  spark-sql_2.11-2.4.0-cdh6.2.0.jar
 jar -xvf spark-sql_2.11-2.4.0-cdh6.2.0.jar org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
 md5sum org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
 3f8956a6f3377f5098f4cf0a6a4d7c2b  org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
+```
 
-step 2:
+- step 2
+```
 复制class到特定目录
 cd /opt/cloudera/parcels/CDH-6.2.0-1.cdh6.2.0.p0.967373/lib/spark/jars/
 cp /tmp/hotfix-spark-2.4.0/target/classes/org/apache/spark/sql/execution/datasources/jdbc/*.class \
@@ -68,13 +71,18 @@ cp /tmp/hotfix-spark-2.4.0/target/classes/org/apache/spark/sql/execution/datasou
 改了源码的class：
 ac9242cc390ae500778a57e1a6059b13
 /tmp/hotfix-spark-2.4.0/target/classes/org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
+```
 
-step 3:
+- step 3
+```
 打包进对应的spark jar里面
 jar -uvf spark-sql_2.11-2.4.0-cdh6.2.0.jar org/apache/spark/sql/execution/datasources/jdbc
 修改源码后的jar：
 [root@sit-getech-hr-4 test_jar]# md5sum spark-sql_2.11-2.4.0-cdh6.2.0.jar
 35ba95383a8497b5185c4d6550d8d5ef  spark-sql_2.11-2.4.0-cdh6.2.0.jar
+```
 
-step 4:
+- step 4
+```
 将这个spark-sql_2.11-2.4.0-cdh6.2.0.jar同步到其他spark节点上。
+```
