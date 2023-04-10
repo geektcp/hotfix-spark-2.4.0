@@ -56,9 +56,12 @@ md5sum  spark-sql_2.11-2.4.0-cdh6.2.0.jar
 144188a2b10334f5afbaa5a35c8b69d5  spark-sql_2.11-2.4.0-cdh6.2.0.jar
 
 没改源码时，源码里面的JDBCOptions.class的md5值
-jar -xvf spark-sql_2.11-2.4.0-cdh6.2.0.jar org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
+jar -xvf spark-sql_2.11-2.4.0-cdh6.2.0.jar \
+org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
+
 md5sum org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
-3f8956a6f3377f5098f4cf0a6a4d7c2b  org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
+3f8956a6f3377f5098f4cf0a6a4d7c2b
+org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
 ```
 
 - step 2
