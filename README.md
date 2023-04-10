@@ -7,17 +7,18 @@
 # usage
 ```
 step 1:
+cd /tmp
 git clone https://github.com/geektcp/hotfix-spark-2.4.0.git
 
 step 2:
 open this project with intelJ idea
-then run the button Build
+then run the intelJ idea button Build or use shortcut keys: CTRL+F9
 ```
 
 # result
 ```
 u can see the class at this:
-target/classes/org/apache/spark/sql/execution/datasources/jdbc
+/tmp/hotfix-spark-2.4.0/target/classes/org/apache/spark/sql/execution/datasources/jdbc
 
 $ ls -l
 total 108
@@ -45,4 +46,36 @@ total 108
 -rw-r--r-- 1 Administrator 197121  3977 Apr  7 19:04  JdbcOptionsInWrite.class
 
 ```
+
+### 有效更新到spark集群
+step 1:
+cd /opt/cloudera/parcels/CDH-6.2.0-1.cdh6.2.0.p0.967373/lib/spark/jars/
+没改源码的md5值
+md5sum  spark-sql_2.11-2.4.0-cdh6.2.0.jar
+144188a2b10334f5afbaa5a35c8b69d5  spark-sql_2.11-2.4.0-cdh6.2.0.jar
+
+没改源码时，源码里面的JDBCOptions.class的md5值
+jar -xvf spark-sql_2.11-2.4.0-cdh6.2.0.jar org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
+md5sum org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
+3f8956a6f3377f5098f4cf0a6a4d7c2b  org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
+
+step 2:
+复制class到特定目录
+cd /opt/cloudera/parcels/CDH-6.2.0-1.cdh6.2.0.p0.967373/lib/spark/jars/
+cp /tmp/hotfix-spark-2.4.0/target/classes/org/apache/spark/sql/execution/datasources/jdbc/*.class \
+/org/apache/spark/sql/execution/datasources/jdbc/
+
+改了源码的class：
+ac9242cc390ae500778a57e1a6059b13
+/tmp/hotfix-spark-2.4.0/target/classes/org/apache/spark/sql/execution/datasources/jdbc/JDBCOptions.class
+
+step 3:
+打包进对应的spark jar里面
+jar -uvf spark-sql_2.11-2.4.0-cdh6.2.0.jar org/apache/spark/sql/execution/datasources/jdbc
+修改源码后的jar：
+[root@sit-getech-hr-4 test_jar]# md5sum spark-sql_2.11-2.4.0-cdh6.2.0.jar
+35ba95383a8497b5185c4d6550d8d5ef  spark-sql_2.11-2.4.0-cdh6.2.0.jar
+
+step 4:
+将这个spark-sql_2.11-2.4.0-cdh6.2.0.jar同步到其他spark节点上。
 
