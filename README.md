@@ -78,4 +78,3 @@ jar -uvf spark-sql_2.11-2.4.0-cdh6.2.0.jar org/apache/spark/sql/execution/dataso
 
 step 4:
 将这个spark-sql_2.11-2.4.0-cdh6.2.0.jar同步到其他spark节点上。
-
